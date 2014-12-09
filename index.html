@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="AngularGameOfLife">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Angular Game of Life</title>
+
+    <link rel="stylesheet" type="text/css" href="app/styles/main.css">
+
+
+    <script type="text/javascript" src="lib/angular.js"></script>
+    <script type="text/javascript" src="lib/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="lib/angular-route.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+</head>
+<body ng-controller="GameController">
+
+<h2>{{title}}</h2>
+<h4>Settings</h4>
+<form id="gameAdmin">
+    <table width="100%">
+        <tbody>
+        <tr>
+            <td style="width: 60px;">Rows:</td>
+            <td><input value="{{numRows}}" name="y" type="number" ng-model="numRows" ng-change="newGame()"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="width: 60px;">Columns:</td>
+            <td><input value="{{numCols}}" name="x" type="number" ng-model="numCols" ng-change="newGame()"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <button ng-click="reset()">New</button>
+        <button ng-click="solve()">Run</button>
+        <button ng-click="stop()" ng-disabled="!running">Stop</button>
+        <button ng-click="gameTick()">Next</button>
+        <label for="randomSeed">Start with random seed</label>
+        <input id="randomSeed" type="checkbox" ng-model="randomSeed" />
+        <label for="outOfBounds">Edges breed more</label>
+        <input id="outOfBounds" type="checkbox" ng-model="edgesBreedMore" />
+        <span>Generation: <span>{{generation}}</span></span>
+
+    </div>
+</form>
+<p>Choose settings then click run.  You can also paint more seeds below</p>
+<div class="gameArea" ng-style="mapWidth()" ng-mouseup="onGameMouseUp($event)" ng-mousedown="onGameMouseDown($event)" ng-mousemove="onGameMouseMove($event)">
+    <div class="mrow" ng-repeat="row in rows">
+        <div class="cell" ng-repeat="col in cols"></div>
+    </div>
+</div>
+
+</body>
+</html>
